@@ -19,7 +19,8 @@ public class Main {
                 final Collection<UsedApplication> capture = pc.capture();
 
                 for (UsedApplication app : capture) {
-                    System.out.println(app.getAppName());
+                    System.out.print(app.getAppName() + " ");
+                    System.out.print(app.getUsedTime() + "\n");
                 }
 
                 break;

@@ -22,15 +22,19 @@ public class ProcessCapture {
 
         Instant now = Instant.now();
         ProcessHandle.allProcesses().forEach(process -> {
-            String program = process.info().command().orElse("unknown");
-            program = Path.of(program).getFileName().toString();
-            Instant startTime = process.info().startInstant().get();
+            String user = process.info().user().orElse("other");
 
-            if (processes.containsKey(program)) {
-                processes.get(program).usedTime += Duration.between(startTime, now).toSeconds();
-            } else {
-                processes.put(program, new UsedApplication(program,
-                        Duration.between(startTime, now).toSeconds()));
+            if (user.equals("a.barsegyan")) {
+                String program = process.info().command().orElse("unknown");
+                program = Path.of(program).getFileName().toString();
+                Instant startTime = process.info().startInstant().get();
+
+                if (processes.containsKey(program)) {
+                    processes.get(program).usedTime += Duration.between(startTime, now).toSeconds();
+                } else {
+                    processes.put(program, new UsedApplication(program,
+                            Duration.between(startTime, now).toSeconds()));
+                }
             }
         });
 
